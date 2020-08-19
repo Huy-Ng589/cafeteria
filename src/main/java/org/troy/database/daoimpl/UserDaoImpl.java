@@ -1,17 +1,17 @@
 package org.troy.database.daoimpl;
 
-import org.troy.database.dao.CustomerDao;
-import org.troy.database.entity.Customer;
+import org.troy.database.dao.UserDao;
+import org.troy.database.entity.Users;
 import org.troy.util.PasswordUtils;
 
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class CustomerDaoImpl implements CustomerDao {
+public class UserDaoImpl implements UserDao {
     private Connection myConn;
 
-    public CustomerDaoImpl() throws Exception{
+    public UserDaoImpl() throws Exception{
 
         //get db properties
         Properties props = new Properties();
@@ -23,22 +23,22 @@ public class CustomerDaoImpl implements CustomerDao {
 
         myConn = DriverManager.getConnection(dburl, user, password);
 
-        System.out.println("Customer DAO - DB connection succesful to " + dburl);
+        System.out.println("User DAO - DB connection succesful to " + dburl);
 
     }
 
-    public void addCustomer(Customer customer) throws SQLException {
+    public void addUser(Users users) throws SQLException {
         PreparedStatement myStmt = null;
         try{
 
-            myStmt = myConn.prepareStatement("insert into customers"
-                    +"(first_name, last_name, email, password)"
+            myStmt = myConn.prepareStatement("insert into users"
+                    +"(first_name, last_name, username, password)"
                     + " values (?, ?, ?, ?)");
-            myStmt.setString(1, customer.getFirstName());
-            myStmt.setString(2, customer.getLastName());
-            myStmt.setString(3, customer.getEmail());
+            myStmt.setString(1, users.getFirstName());
+            myStmt.setString(2, users.getLastName());
+            myStmt.setString(3, users.getUsername());
 
-            String encryptedPassword = PasswordUtils.encryptPassword(customer.getPassword());
+            String encryptedPassword = PasswordUtils.encryptPassword(users.getPassword());
             myStmt.setString(4, encryptedPassword);
 
             myStmt.executeUpdate();
@@ -49,18 +49,18 @@ public class CustomerDaoImpl implements CustomerDao {
         }
     }
 
-    public boolean authenticate(String plainTextPassword, Customer customer){
-        String encryptedPassword = customer.getPassword();
+    public boolean authenticate(String plainTextPassword, Users user){
+        String encryptedPassword = user.getPassword();
         return PasswordUtils.checkPassword(plainTextPassword, encryptedPassword);
     }
 
-    public Customer searchCustomer(String email) throws SQLException{
+    public Users searchUser(String uname) throws SQLException{
         PreparedStatement myStmt = null;
         ResultSet myRs = null;
         try{
 
-            myStmt = myConn.prepareStatement("select * from customers where email=?");
-            myStmt.setString(1, email);
+            myStmt = myConn.prepareStatement("select * from users where username=?");
+            myStmt.setString(1, uname);
             myRs = myStmt.executeQuery();
 
             //Statement.executeQuery() never returns null if resultset is empty.
@@ -68,8 +68,8 @@ public class CustomerDaoImpl implements CustomerDao {
                 return null;
             }
             else{
-                Customer customer = convertRowToCustomer(myRs);
-                return customer;
+                Users users = convertRowToUser(myRs);
+                return users;
             }
         }
         finally{
@@ -80,14 +80,14 @@ public class CustomerDaoImpl implements CustomerDao {
         }
     }
 
-    private Customer convertRowToCustomer(ResultSet myRs) throws SQLException{
+    private Users convertRowToUser(ResultSet myRs) throws SQLException{
         int id = myRs.getInt("id");
         String firstName = myRs.getString("first_name");
         String lastName = myRs.getString("last_name");
-        String email = myRs.getString("email");
+        String username = myRs.getString("username");
         String encryptedPassword = myRs.getString("password");
-        Customer customer = new Customer(id, firstName, lastName, email, encryptedPassword);
+        Users users = new Users(id, firstName, lastName, username, encryptedPassword);
 
-        return customer;
+        return users;
     }
 }

@@ -1,8 +1,8 @@
 package org.troy.database.daoimpl;
 
 import org.troy.database.dao.OrderDao;
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Order;
+import org.troy.database.entity.Users;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -28,7 +28,7 @@ public class OrderDaoImpl implements OrderDao {
 
     }
 
-    public List<Order> getOrderHistory(Customer customer) throws SQLException {
+    public List<Order> getOrderHistory(Users users) throws SQLException {
         List<Order> list = new ArrayList<Order>();
         PreparedStatement myStmt = null;
         ResultSet myRs = null;
@@ -36,7 +36,7 @@ public class OrderDaoImpl implements OrderDao {
             String query = "select * from orders where orders.customer_id=?";
             myStmt = myConn.prepareStatement(query);
 
-            myStmt.setInt(1, customer.getId());
+            myStmt.setInt(1, users.getId());
             myRs = myStmt.executeQuery();
             while(myRs.next()){
                 Order temp = convertRowToOrder(myRs);

@@ -1,12 +1,12 @@
 package org.troy.database.ui;
 
-import org.troy.database.daoimpl.CustomerDaoImpl;
 import org.troy.database.daoimpl.FoodDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
-import org.troy.database.entity.Customer;
+import org.troy.database.daoimpl.UserDaoImpl;
+import org.troy.database.entity.Users;
 import org.troy.database.ui.orders.FoodMenuDialog;
 import org.troy.database.ui.orders.OrderHistoryDialog;
-import org.troy.database.ui.users.CustomerLoginDiaLog;
+import org.troy.database.ui.users.UserLoginDialog;
 
 import java.awt.EventQueue;
 
@@ -30,7 +30,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class BillingApp extends JFrame {
 
-    private CustomerLoginDiaLog customerLoginDialog;
+    private UserLoginDialog userLoginDialog;
 
     private JPanel contentPane;
     private JButton btnOrderMenu;
@@ -39,30 +39,27 @@ public class BillingApp extends JFrame {
     private FoodDaoImpl foodDAO;
     private OrderDaoImpl orderDAO;
 
-    private Customer customer;
+    private Users users;
 
-    public BillingApp(final CustomerLoginDiaLog customerLoginDialog, OrderDaoImpl orderDAO, final FoodDaoImpl foodDAO, final Customer customer) {
+    public BillingApp(final UserLoginDialog userLoginDialog, OrderDaoImpl orderDAO, final FoodDaoImpl foodDAO, final Users users) {
 
-        this.customerLoginDialog = customerLoginDialog;
+        this.userLoginDialog = userLoginDialog;
         this.orderDAO= orderDAO;
         this.foodDAO = foodDAO;
-        this.customer = customer;
-        System.out.println("Logged in as "+ this.customer);
+        this.users = users;
+        System.out.println("Logged in as "+ this.users);
         addWindowListener(new WindowAdapter() {
 
             @Override
-            public void windowClosing(WindowEvent we)
-            {
+            public void windowClosing(WindowEvent we) {
                 int PromptResult = JOptionPane.showConfirmDialog(null, "Exit application ?",
                         "Confirm exit", JOptionPane.OK_CANCEL_OPTION);
                 if(PromptResult== JOptionPane.OK_OPTION)
-                {
                     System.exit(0);
-                }
             }
         });
 
-        setTitle("Hungry Hobbit Cafeteria");
+        setTitle("HuyNQ Cafeteria");
         setBounds(100, 100, 550, 380);
         setResizable(false);
         contentPane = new JPanel();
@@ -73,7 +70,7 @@ public class BillingApp extends JFrame {
         JLabel lblWelcomeToCafe = new JLabel("WELCOME TO CAFE SYSTEM");
         lblWelcomeToCafe.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblWelcomeToCafe.setHorizontalAlignment(SwingConstants.CENTER);
-        lblWelcomeToCafe.setBounds(75, 22, 335, 88);
+        lblWelcomeToCafe.setBounds(115, 22, 335, 88);
         contentPane.add(lblWelcomeToCafe);
 
         btnOrderMenu = new JButton("ORDER MENU");
@@ -81,7 +78,7 @@ public class BillingApp extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
 
                 //create the FoodMenuDialog and pass current dialog reference to set Visible it later
-                FoodMenuDialog dialog = new FoodMenuDialog(BillingApp.this, foodDAO, customer);
+                FoodMenuDialog dialog = new FoodMenuDialog(BillingApp.this, foodDAO, users);
 
                 //dissolve the current dialog.
                 dispose();
@@ -92,7 +89,7 @@ public class BillingApp extends JFrame {
             }
         });
         btnOrderMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnOrderMenu.setBounds(44, 121, 143, 67);
+        btnOrderMenu.setBounds(104, 121, 143, 67);
         contentPane.add(btnOrderMenu);
 
         btnNewButton = new JButton("VIEW HISTORY");
@@ -103,14 +100,14 @@ public class BillingApp extends JFrame {
             }
         });
         btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnNewButton.setBounds(249, 121, 161, 67);
+        btnNewButton.setBounds(289, 121, 161, 67);
         contentPane.add(btnNewButton);
 
         JButton btnLogOut = new JButton("Log Out");
         btnLogOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                customerLoginDialog.setVisible(true);
+                userLoginDialog.setVisible(true);
                 System.out.println("Customer logged out.");
             }
         });
@@ -121,14 +118,14 @@ public class BillingApp extends JFrame {
         customerLabel.setFont(new Font("Myriad Pro", Font.PLAIN, 14));
         customerLabel.setBounds(10, 5, 250, 14);
 
-        String firstName = customer.getFirstName();
-        String lastName = customer.getLastName();
+        String firstName = users.getFirstName();
+        String lastName = users.getLastName();
         customerLabel.setText("Logged in as: " + firstName + " " + lastName);
         contentPane.add(customerLabel);
     }
 
     private void displayOrderHistoryDialog(){
-        OrderHistoryDialog dialog = new OrderHistoryDialog(BillingApp.this, orderDAO, customer);
+        OrderHistoryDialog dialog = new OrderHistoryDialog(BillingApp.this, orderDAO, users);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         try {
             dialog.setTableModel();
@@ -145,12 +142,12 @@ public class BillingApp extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-
-                    CustomerDaoImpl customerDAO = new CustomerDaoImpl();
+                    UserDaoImpl userDao = new UserDaoImpl();
                     FoodDaoImpl foodDAO = new FoodDaoImpl();
                     OrderDaoImpl orderDAO = new OrderDaoImpl();
 
-                    CustomerLoginDiaLog dialog = new CustomerLoginDiaLog(customerDAO, foodDAO, orderDAO);
+
+                    UserLoginDialog dialog = new UserLoginDialog(userDao, foodDAO, orderDAO);
                     dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
                     dialog.setVisible(true);
 

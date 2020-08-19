@@ -43,8 +43,6 @@ public class FoodTableModel extends AbstractTableModel {
                 return tempFood.getProductCode();
             case PRODUCT_NAME_COL:
                 return tempFood.getProductName();
-            case PRODUCT_CATEGORY_COL:
-                return tempFood.getProductCategory();
             case PRICE_COL:
                 return tempFood.getPrice();
             case QUANTITY_COL:

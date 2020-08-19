@@ -1,8 +1,8 @@
 package org.troy.database.ui.orders;
 
 import org.troy.database.daoimpl.FoodDaoImpl;
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Food;
+import org.troy.database.entity.Users;
 import org.troy.database.ui.BillingApp;
 
 import java.awt.BorderLayout;
@@ -37,7 +37,7 @@ public class FoodMenuDialog extends JDialog {
     private BillingApp frame;
 
     private FoodDaoImpl foodDAO;
-    private Customer customer;
+    private Users users;
 
     private final JPanel contentPanel = new JPanel();
     JScrollPane tabelscrollPane;
@@ -51,11 +51,11 @@ public class FoodMenuDialog extends JDialog {
     JButton btnProceedToCheckout;
 
 
-    public FoodMenuDialog(final BillingApp frame, final FoodDaoImpl foodDAO, final Customer customer) {
+    public FoodMenuDialog(final BillingApp frame, final FoodDaoImpl foodDAO, final Users users) {
 
         this.frame = frame;
         this.foodDAO = foodDAO;
-        this.customer = customer;
+        this.users = users;
 
         addWindowListener(new WindowAdapter() {
 
@@ -71,7 +71,7 @@ public class FoodMenuDialog extends JDialog {
             }
         });
 
-        setTitle("Hungry Hobbit Cafeteria - Order Menu");
+        setTitle("HuyNQ Cafeteria - Order Menu");
         setBounds(100, 100, 680, 520);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -218,7 +218,7 @@ public class FoodMenuDialog extends JDialog {
                     e.printStackTrace();
                 }
 
-                CheckoutDialog dialog = new CheckoutDialog(FoodMenuDialog.this, frame, foodDAO, customer);
+                CheckoutDialog dialog = new CheckoutDialog(FoodMenuDialog.this, frame, foodDAO, users);
                 dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
                 dispose();	//dissolve the current window
                 dialog.setVisible(true);

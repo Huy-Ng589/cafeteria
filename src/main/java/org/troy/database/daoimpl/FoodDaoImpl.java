@@ -1,8 +1,8 @@
 package org.troy.database.daoimpl;
 
 import org.troy.database.dao.FoodDao;
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Food;
+import org.troy.database.entity.Users;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -79,14 +79,14 @@ public class FoodDaoImpl implements FoodDao {
         }
     }
 
-    public int addOrder(Customer customer, int netAmount) throws SQLException{
+    public int addOrder(Users users, int netAmount) throws SQLException{
         PreparedStatement myStmt = null;
         Statement myStmt1 = null;
         ResultSet myRs = null;
         try{
             myStmt = myConn.prepareStatement("insert into orders (customer_id, order_total) "
                     + "values(?, ?)");
-            myStmt.setInt(1, customer.getId());
+            myStmt.setInt(1, users.getId());
             myStmt.setInt(2, netAmount);
             myStmt.executeUpdate();
 
@@ -143,11 +143,10 @@ public class FoodDaoImpl implements FoodDao {
     private Food convertRowToFoodItem(ResultSet myRs) throws SQLException{
         int code = myRs.getInt("product_code");
         String name = myRs.getString("product_name");
-        String category = myRs.getString("product_category");
         int price = myRs.getInt("price");
         int quantity = myRs.getInt("quantity");
 
-        Food tempFood = new Food(code, name, category, price, quantity);
+        Food tempFood = new Food(code, name, price, quantity);
 
         return tempFood;
     }

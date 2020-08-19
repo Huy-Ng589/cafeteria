@@ -1,22 +1,22 @@
 package org.troy.database.entity;
 
-public class Customer {
+public class Users {
 
     private int id;
     private String firstName;
     private String lastName;
-    private String email;
+    private String username;
     private String password;
 
-    public Customer(String fname, String lname, String mail, String pwd){
+    public Users(String fname, String lname, String uname, String pwd){
         firstName = fname;
         lastName = lname;
-        email = mail;
+        username = uname;
         password = pwd;
     }
 
-    public Customer(int id, String fname, String lname, String mail, String pwd){
-        this(fname, lname, mail, pwd);
+    public Users(int id, String fname, String lname, String uname, String pwd){
+        this(fname, lname, uname, pwd);
         this.id = id;
     }
 
@@ -41,11 +41,11 @@ public class Customer {
         firstName = name;
     }
 
-    public String getEmail(){
-        return email;
+    public String getUsername(){
+        return username;
     }
-    public void setEmail(String mail){
-        email = mail;
+    public void setUsername(String mail){
+        username = mail;
     }
 
     public String getPassword(){
@@ -56,7 +56,7 @@ public class Customer {
     }
 
     public String toString(){
-        return String.format("Customer [Id= %s, First name= %s, Last name= %s, E-mail= %s]",
-                id, firstName, lastName, email);
+        return String.format("User [Id= %s, First name= %s, Last name= %s, Username= %s]",
+                id, firstName, lastName, username);
     }
 }

@@ -1,8 +1,8 @@
 package org.troy.database.ui.orders;
 
 import org.troy.database.daoimpl.OrderDaoImpl;
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Order;
+import org.troy.database.entity.Users;
 import org.troy.database.ui.BillingApp;
 
 import java.awt.BorderLayout;
@@ -28,19 +28,19 @@ public class OrderHistoryDialog extends JDialog {
 
     private OrderDaoImpl orderDAO;
     private JTable orderHistoryTable;
-    private Customer customer;
+    private Users users;
 
     private JPanel buttonPanel;
 
-    public OrderHistoryDialog(BillingApp frame, OrderDaoImpl orderDAO, Customer customer){
+    public OrderHistoryDialog(BillingApp frame, OrderDaoImpl orderDAO, Users users){
         this();
         this.frame = frame;
         this.orderDAO = orderDAO;
-        this.customer = customer;
+        this.users = users;
     }
 
     public OrderHistoryDialog() {
-        setTitle("Hungry Hobbit Cafeteria");
+        setTitle("HuyNQ Cafeteria");
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
 
@@ -70,7 +70,7 @@ public class OrderHistoryDialog extends JDialog {
     }
 
     public void setTableModel() throws SQLException{
-        List<Order> list = orderDAO.getOrderHistory(customer);
+        List<Order> list = orderDAO.getOrderHistory(users);
         OrderHistoryTableModel tableModel = new OrderHistoryTableModel(list);
         orderHistoryTable.setModel(tableModel);
         alignTable();

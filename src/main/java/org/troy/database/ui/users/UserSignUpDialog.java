@@ -1,7 +1,7 @@
 package org.troy.database.ui.users;
 
-import org.troy.database.daoimpl.CustomerDaoImpl;
-import org.troy.database.entity.Customer;
+import org.troy.database.daoimpl.UserDaoImpl;
+import org.troy.database.entity.Users;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -23,11 +23,11 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class CustomerSignUpDialog extends JDialog {
+public class UserSignUpDialog extends JDialog {
 
-    private CustomerLoginDiaLog loginDialog;
+    private UserLoginDialog loginDialog;
 
-    private CustomerDaoImpl customerDAO;
+    private UserDaoImpl userDAO;
 
     private final JPanel contentPanel = new JPanel();
     private JTextField firstNameTextField;
@@ -38,15 +38,15 @@ public class CustomerSignUpDialog extends JDialog {
     private JPasswordField cnfPasswordField;
     private JButton btnCreateAccount;
 
-    public CustomerSignUpDialog(CustomerLoginDiaLog dialog, CustomerDaoImpl customerDAO){
+    public UserSignUpDialog(UserLoginDialog dialog, UserDaoImpl userDAO){
         this();
-        this.customerDAO = customerDAO;
+        this.userDAO = userDAO;
 
         //It"ll be used to make the dialog visible again
         this.loginDialog = dialog;
     }
 
-    public CustomerSignUpDialog() {
+    public UserSignUpDialog() {
         addWindowListener(new WindowAdapter() {
 
             @Override
@@ -61,7 +61,7 @@ public class CustomerSignUpDialog extends JDialog {
             }
         });
 
-        setTitle("Hungry Hobbit Cafeteria - Sign Up");
+        setTitle("HuyNQ Cafeteria - Sign Up");
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,7 +94,7 @@ public class CustomerSignUpDialog extends JDialog {
         contentPanel.add(lastNameTextField);
 
 
-        JLabel lblEmail = new JLabel("E-mail");
+        JLabel lblEmail = new JLabel("Username");
         lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
         lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
         lblEmail.setBounds(21, 73, 70, 14);
@@ -162,7 +162,7 @@ public class CustomerSignUpDialog extends JDialog {
     private void createCustomer(){
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        String email = emailTextField.getText();
+        String username = emailTextField.getText();
         String password = new String(passwordField.getPassword());
         String cnfPassword = new String(cnfPasswordField.getPassword());
 
@@ -173,16 +173,16 @@ public class CustomerSignUpDialog extends JDialog {
             return;
         }
 
-        Customer customer = new Customer(firstName, lastName, email, password);
+        Users user = new Users(firstName, lastName, username, password);
 
         try {
-            customerDAO.addCustomer(customer);
+            userDAO.addUser(user);
             JOptionPane.showMessageDialog(loginDialog, "Customer created successfully",
                     "Success!", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
             loginDialog.setVisible(true);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(CustomerSignUpDialog.this,
+            JOptionPane.showMessageDialog(UserSignUpDialog.this,
                     "Error creating account" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 

@@ -1,9 +1,8 @@
 package org.troy.database.dao;
 
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Food;
+import org.troy.database.entity.Users;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface FoodDao {
 
     int getNetAmount() throws SQLException;
 
-    int addOrder(Customer customer, int netAmount) throws SQLException;
+    int addOrder(Users users, int netAmount) throws SQLException;
 
     void vacateQuantityColumn();
 

@@ -1,8 +1,8 @@
 package org.troy.database.ui.orders;
 
 import org.troy.database.daoimpl.FoodDaoImpl;
-import org.troy.database.entity.Customer;
 import org.troy.database.entity.Food;
+import org.troy.database.entity.Users;
 import org.troy.database.ui.BillingApp;
 
 import java.awt.BorderLayout;
@@ -32,7 +32,7 @@ public class CheckoutDialog extends JDialog {
     private FoodMenuDialog foodMenuDialog;
     private BillingApp frame;
 
-    private Customer customer;
+    private Users users;
     private FoodDaoImpl foodDAO;
 
     private final JPanel contentPanel = new JPanel();
@@ -46,12 +46,12 @@ public class CheckoutDialog extends JDialog {
     private CartTableModel tableModel ;
 
 
-    public CheckoutDialog(final FoodMenuDialog foodMenuDialog, BillingApp frame, final FoodDaoImpl foodDAO, Customer customer) {
+    public CheckoutDialog(final FoodMenuDialog foodMenuDialog, BillingApp frame, final FoodDaoImpl foodDAO, Users users) {
 
         this.foodMenuDialog = foodMenuDialog;
         this.frame = frame;
         this.foodDAO = foodDAO;
-        this.customer = customer;
+        this.users = users;
 
         addWindowListener(new WindowAdapter() {
 
@@ -68,7 +68,7 @@ public class CheckoutDialog extends JDialog {
             }
         });
 
-        setTitle("Hungry Hobbit Cafeteria - Checkout");
+        setTitle("HuyNQ Cafeteria - Checkout");
         setBounds(100, 100, 640, 380);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -226,7 +226,7 @@ public class CheckoutDialog extends JDialog {
         }
 
         try {
-            int orderId = foodDAO.addOrder(customer, netAmount);	//insert the order details in order menu.
+            int orderId = foodDAO.addOrder(users, netAmount);	//insert the order details in order menu.
             foodDAO.vacateQuantityColumn();
             JOptionPane.showMessageDialog(CheckoutDialog.this, "Order id: " +orderId,
                     "Order placed successfully", JOptionPane.INFORMATION_MESSAGE);

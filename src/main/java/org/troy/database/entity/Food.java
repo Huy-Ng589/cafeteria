@@ -3,15 +3,13 @@ package org.troy.database.entity;
 public class Food {
     private int productCode;
     private String productName;
-    private String productCategory;
     private int price;
     private int quantity;
 
-    public Food(int productCode, String productName, String productCategory, int price, int quantity){
+    public Food(int productCode, String productName, int price, int quantity){
 
         this.productCode = productCode;
         this.productName = productName;
-        this.productCategory = productCategory;
         this.price = price;
         this.quantity = quantity;
     }
@@ -40,14 +38,6 @@ public class Food {
         this.productName = productName;
     }
 
-    public String getProductCategory(){
-        return productCategory;
-    }
-
-    public void setProductCateory(String productCateory){
-        this.productCategory = productCateory;
-    }
-
     public int getPrice(){
         return price;
     }
@@ -59,7 +49,7 @@ public class Food {
     @Override
     public String toString(){
         return String.format("Product [Code= %s, Name= %s, Category= %s, Price= %s]",
-                productCode, productName, productCategory, price);
+                productCode, productName, price);
     }
 
 }
