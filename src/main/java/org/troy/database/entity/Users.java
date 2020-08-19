@@ -7,16 +7,18 @@ public class Users {
     private String lastName;
     private String username;
     private String password;
+    private String permission;
 
-    public Users(String fname, String lname, String uname, String pwd){
+    public Users(String fname, String lname, String uname, String pwd, String perm){
         firstName = fname;
         lastName = lname;
         username = uname;
         password = pwd;
+        permission = perm;
     }
 
-    public Users(int id, String fname, String lname, String uname, String pwd){
-        this(fname, lname, uname, pwd);
+    public Users(int id, String fname, String lname, String uname, String pwd, String perm){
+        this(fname, lname, uname, pwd, perm);
         this.id = id;
     }
 
@@ -55,8 +57,16 @@ public class Users {
         password = pwd;
     }
 
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
     public String toString(){
-        return String.format("User [Id= %s, First name= %s, Last name= %s, Username= %s]",
-                id, firstName, lastName, username);
+        return String.format("User [Id = %s, First name = %s, Last name = %s, Username = %s, Permission = %s]",
+                id, firstName, lastName, username, permission);
     }
 }

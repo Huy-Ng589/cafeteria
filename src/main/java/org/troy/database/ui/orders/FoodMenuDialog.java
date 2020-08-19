@@ -3,6 +3,7 @@ package org.troy.database.ui.orders;
 import org.troy.database.daoimpl.FoodDaoImpl;
 import org.troy.database.entity.Food;
 import org.troy.database.entity.Users;
+import org.troy.database.ui.BillingAdminApp;
 import org.troy.database.ui.BillingApp;
 
 import java.awt.BorderLayout;

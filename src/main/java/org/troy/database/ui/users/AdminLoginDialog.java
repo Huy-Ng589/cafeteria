@@ -4,6 +4,7 @@ import org.troy.database.daoimpl.FoodDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
 import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
+import org.troy.database.ui.BillingAdminApp;
 import org.troy.database.ui.BillingApp;
 import org.troy.database.ui.DashboardDialog;
 
@@ -18,7 +19,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class UserLoginDialog extends JDialog {
+public class AdminLoginDialog extends JDialog {
     private DashboardDialog frame;
     private FoodDaoImpl foodDAO;
     private UserDaoImpl userDao;
@@ -31,7 +32,7 @@ public class UserLoginDialog extends JDialog {
     private JPasswordField passwordField;
     private JButton btnBack;
 
-    public UserLoginDialog(final DashboardDialog frame, UserDaoImpl userDao, FoodDaoImpl foodDAO, OrderDaoImpl orderDAO){
+    public AdminLoginDialog(final DashboardDialog frame, UserDaoImpl userDao, FoodDaoImpl foodDAO, OrderDaoImpl orderDAO){
         this();
         this.frame = frame;
         this.userDao = userDao;
@@ -52,10 +53,10 @@ public class UserLoginDialog extends JDialog {
 
     }
 
-    public UserLoginDialog() {
+    public AdminLoginDialog() {
         //this.setResizable(false);
 
-        setTitle("HuyNQ Cafeteria - Employee Log In");
+        setTitle("HuyNQ Cafeteria - Admin Log In");
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,7 +68,7 @@ public class UserLoginDialog extends JDialog {
             flowLayout.setVgap(10);
             contentPanel.add(lblpanel, BorderLayout.NORTH);
             {
-                lblWelcomeToCafeteria = new JLabel("Employee site");
+                lblWelcomeToCafeteria = new JLabel("Administrator site");
                 lblWelcomeToCafeteria.setFont(new Font("Sylfaen", Font.BOLD, 16));
                 lblpanel.add(lblWelcomeToCafeteria);
             }
@@ -77,10 +78,10 @@ public class UserLoginDialog extends JDialog {
             contentPanel.add(credentialpanel, BorderLayout.CENTER);
             credentialpanel.setLayout(null);
 
-            JLabel lblEmail = new JLabel("Username");
-            lblEmail.setFont(new Font("Sylfaen", Font.PLAIN, 15));
-            lblEmail.setBounds(70, 19, 70, 14);
-            credentialpanel.add(lblEmail);
+            JLabel lblUser = new JLabel("Username");
+            lblUser.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+            lblUser.setBounds(70, 19, 70, 14);
+            credentialpanel.add(lblUser);
 
             userTextField = new JTextField();
             userTextField.setBounds(156, 16, 180, 20);
@@ -95,7 +96,6 @@ public class UserLoginDialog extends JDialog {
             JButton btnLogIn = new JButton("Log in");
             btnLogIn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
                     performLogin();
                 }
             });
@@ -106,6 +106,27 @@ public class UserLoginDialog extends JDialog {
 
             btnLogIn.setBounds(247, 78, 89, 23);
             credentialpanel.add(btnLogIn);
+
+            JLabel lblNewUser = new JLabel("Add new employee?");
+            lblNewUser.setFont(new Font("Sylfaen", Font.PLAIN, 15));
+            lblNewUser.setBounds(105, 125, 150, 14);
+            credentialpanel.add(lblNewUser);
+
+            JButton btnSignUp = new JButton("Sign up");
+            btnSignUp.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    UserSignUpDialog dialog = new UserSignUpDialog(AdminLoginDialog.this, userDao);
+                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+                    //dissolve current dialog and create new dialog
+                    dispose();
+                    //setVisible(false);    can use this also but dispose() is preferred to release memory
+                    dialog.setVisible(true);
+
+                }
+            });
+            btnSignUp.setBounds(248, 117, 89, 23);
+            credentialpanel.add(btnSignUp);
 
             JPanel bottombtnpanel = new JPanel();
             contentPanel.add(bottombtnpanel, BorderLayout.SOUTH);
@@ -132,30 +153,40 @@ public class UserLoginDialog extends JDialog {
         try {
             Users user = userDao.searchUser(username);	//if not NULL, customer records found in  database
             if(user == null){
-                JOptionPane.showMessageDialog(UserLoginDialog.this, "Customer not found", "OOPS!",
+                JOptionPane.showMessageDialog(AdminLoginDialog.this, "User not found", "OOPS!",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
-            //Authentication check
-            boolean check = userDao.authenticate(plainTextPassword, user);
-            if(check){
-                System.out.println("Customer authenticated");
-                userTextField.setText("");
-                passwordField.setText("");
-                BillingApp frame = new BillingApp(UserLoginDialog.this, orderDAO, foodDAO, user);
-                frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);;
-                dispose();
-                frame.setVisible(true);
-            }
-            else{
-                JOptionPane.showMessageDialog(UserLoginDialog.this, "Invalid password!", "Invalid login",
+            //Check permission
+            String checkPermission = user.getPermission();
+            if (checkPermission.equals("Admin")) {
+                //Authentication check
+                boolean check = userDao.authenticate(plainTextPassword, user);
+
+                if(check){
+                    System.out.println("Admin authenticated");
+                    userTextField.setText("");
+                    passwordField.setText("");
+                    BillingAdminApp frame = new BillingAdminApp(AdminLoginDialog.this, orderDAO, foodDAO, user);
+                    frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);;
+                    dispose();
+                    frame.setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(AdminLoginDialog.this, "Invalid password!", "Invalid login",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(AdminLoginDialog.this, "Invalid permission!", "Invalid login",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
         }
         catch (SQLException e) {
-            JOptionPane.showMessageDialog(UserLoginDialog.this, "Error logging in: "
+            JOptionPane.showMessageDialog(AdminLoginDialog.this, "Error logging in: "
                     + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -26,9 +26,9 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class BillingApp extends JFrame {
+public class BillingAdminApp extends JFrame {
 
-    private UserLoginDialog userLoginDialog;
+    private AdminLoginDialog adminLoginDialog;
 
     private JPanel contentPane;
     private JButton btnOrderMenu;
@@ -39,9 +39,9 @@ public class BillingApp extends JFrame {
 
     private Users users;
 
-    public BillingApp(final UserLoginDialog userLoginDialog, OrderDaoImpl orderDAO, final FoodDaoImpl foodDAO, final Users users) {
+    public BillingAdminApp(final AdminLoginDialog adminLoginDialog, OrderDaoImpl orderDAO, final FoodDaoImpl foodDAO, final Users users) {
 
-        this.userLoginDialog = userLoginDialog;
+        this.adminLoginDialog = adminLoginDialog;
         this.orderDAO= orderDAO;
         this.foodDAO = foodDAO;
         this.users = users;
@@ -71,23 +71,23 @@ public class BillingApp extends JFrame {
         lblWelcomeToCafe.setBounds(115, 22, 335, 88);
         contentPane.add(lblWelcomeToCafe);
 
-        btnOrderMenu = new JButton("ORDER MENU");
+        btnOrderMenu = new JButton("MODIFY MENU");
         btnOrderMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                //create the FoodMenuDialog and pass current dialog reference to set Visible it later
-                FoodMenuDialog dialog = new FoodMenuDialog(BillingApp.this, foodDAO, users);
-
-                //dissolve the current dialog.
-                dispose();
-                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                dialog.setVisible(true);
+//                //create the FoodMenuDialog and pass current dialog reference to set Visible it later
+//                FoodMenuDialog dialog = new FoodMenuDialog(BillingApp.this, foodDAO, users);
+//
+//                //dissolve the current dialog.
+//                dispose();
+//                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+//                dialog.setVisible(true);
 
 
             }
         });
         btnOrderMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-        btnOrderMenu.setBounds(104, 121, 143, 67);
+        btnOrderMenu.setBounds(94, 121, 161, 67);
         contentPane.add(btnOrderMenu);
 
         btnNewButton = new JButton("VIEW HISTORY");
@@ -105,7 +105,7 @@ public class BillingApp extends JFrame {
         btnLogOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                userLoginDialog.setVisible(true);
+                adminLoginDialog.setVisible(true);
                 System.out.println("Customer logged out.");
             }
         });
@@ -121,39 +121,5 @@ public class BillingApp extends JFrame {
         customerLabel.setText("Logged in as: " + firstName + " " + lastName);
         contentPane.add(customerLabel);
     }
-
-//    private void displayOrderHistoryDialog(){
-//        OrderHistoryDialog dialog = new OrderHistoryDialog(BillingAdminApp.this, orderDAO, users);
-//        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//        try {
-//            dialog.setTableModel();
-//            dialog.setVisible(true);
-//        }
-//        catch (SQLException e) {
-//            JOptionPane.showMessageDialog(BillingAdminApp.this, "Error retrieving Order History",
-//                    "Error", JOptionPane.ERROR_MESSAGE);
-//            e.printStackTrace();
-//        }
-//    }
-
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    UserDaoImpl userDao = new UserDaoImpl();
-//                    FoodDaoImpl foodDAO = new FoodDaoImpl();
-//                    OrderDaoImpl orderDAO = new OrderDaoImpl();
-//
-//
-//                    UserLoginDialog dialog = new UserLoginDialog(, userDao, foodDAO, orderDAO);
-//                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//                    dialog.setVisible(true);
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
 }
 

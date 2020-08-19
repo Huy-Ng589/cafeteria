@@ -4,18 +4,10 @@ import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
 
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -25,20 +17,21 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class UserSignUpDialog extends JDialog {
 
-    private UserLoginDialog loginDialog;
+    private AdminLoginDialog loginDialog;
 
     private UserDaoImpl userDAO;
 
     private final JPanel contentPanel = new JPanel();
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
-    private JTextField emailTextField;
+    private JTextField userTextField;
     private JLabel lblPassword;
     private JPasswordField passwordField;
     private JPasswordField cnfPasswordField;
+    private JComboBox permission;
     private JButton btnCreateAccount;
 
-    public UserSignUpDialog(UserLoginDialog dialog, UserDaoImpl userDAO){
+    public UserSignUpDialog(AdminLoginDialog dialog, UserDaoImpl userDAO){
         this();
         this.userDAO = userDAO;
 
@@ -62,7 +55,7 @@ public class UserSignUpDialog extends JDialog {
         });
 
         setTitle("HuyNQ Cafeteria - Sign Up");
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 360, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -101,10 +94,10 @@ public class UserSignUpDialog extends JDialog {
         contentPanel.add(lblEmail);
 
 
-        emailTextField = new JTextField();
-        emailTextField.setColumns(10);
-        emailTextField.setBounds(112, 71, 190, 20);
-        contentPanel.add(emailTextField);
+        userTextField = new JTextField();
+        userTextField.setColumns(10);
+        userTextField.setBounds(112, 71, 190, 20);
+        contentPanel.add(userTextField);
 
         lblPassword = new JLabel("Password");
         lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
@@ -127,15 +120,26 @@ public class UserSignUpDialog extends JDialog {
         cnfPasswordField.setBounds(112, 133, 190, 20);
         contentPanel.add(cnfPasswordField);
 
+        JLabel lblPermission = new JLabel("Permission");
+        lblPermission.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPermission.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblPermission.setBounds(10, 168, 100, 14);
+        contentPanel.add(lblPermission);
+
+        String permissions[] = {"Admin", "Employee"};
+        permission = new JComboBox(permissions);
+        permission.setBounds(112, 166, 100, 20);
+        contentPanel.add(permission);
+
         btnCreateAccount = new JButton("Create Account");
         btnCreateAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                createCustomer();
+                createUser();
             }
         });
         btnCreateAccount.setFont(new Font("Lucida Fax", Font.BOLD, 13));
-        btnCreateAccount.setBounds(21, 176, 158, 32);
+        btnCreateAccount.setBounds(21, 216, 158, 32);
         contentPanel.add(btnCreateAccount);
 
         JButton btnBack = new JButton("Back");
@@ -146,7 +150,7 @@ public class UserSignUpDialog extends JDialog {
             }
         });
         btnBack.setFont(new Font("Lucida Fax", Font.BOLD, 13));
-        btnBack.setBounds(213, 176, 89, 29);
+        btnBack.setBounds(213, 216, 89, 29);
         contentPanel.add(btnBack);
 
         //Adding window event to handle the operations performed as the signUo Dialog is closed
@@ -159,12 +163,13 @@ public class UserSignUpDialog extends JDialog {
         });
     }
 
-    private void createCustomer(){
+    private void createUser(){
         String firstName = firstNameTextField.getText();
         String lastName = lastNameTextField.getText();
-        String username = emailTextField.getText();
+        String username = userTextField.getText();
         String password = new String(passwordField.getPassword());
         String cnfPassword = new String(cnfPasswordField.getPassword());
+        String permiss = (String) permission.getSelectedItem();
 
         if (!password.equals(cnfPassword)) {
             JOptionPane.showMessageDialog(this,
@@ -173,7 +178,7 @@ public class UserSignUpDialog extends JDialog {
             return;
         }
 
-        Users user = new Users(firstName, lastName, username, password);
+        Users user = new Users(firstName, lastName, username, password, permiss);
 
         try {
             userDAO.addUser(user);

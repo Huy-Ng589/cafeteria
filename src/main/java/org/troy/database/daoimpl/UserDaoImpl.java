@@ -32,14 +32,15 @@ public class UserDaoImpl implements UserDao {
         try{
 
             myStmt = myConn.prepareStatement("insert into users"
-                    +"(first_name, last_name, username, password)"
-                    + " values (?, ?, ?, ?)");
+                    +"(first_name, last_name, username, password, permission)"
+                    + " values (?, ?, ?, ?, ?)");
             myStmt.setString(1, users.getFirstName());
             myStmt.setString(2, users.getLastName());
             myStmt.setString(3, users.getUsername());
 
             String encryptedPassword = PasswordUtils.encryptPassword(users.getPassword());
             myStmt.setString(4, encryptedPassword);
+            myStmt.setString(5, users.getPermission());
 
             myStmt.executeUpdate();
         }
@@ -86,7 +87,8 @@ public class UserDaoImpl implements UserDao {
         String lastName = myRs.getString("last_name");
         String username = myRs.getString("username");
         String encryptedPassword = myRs.getString("password");
-        Users users = new Users(id, firstName, lastName, username, encryptedPassword);
+        String permission = myRs.getString("permission");
+        Users users = new Users(id, firstName, lastName, username, encryptedPassword, permission);
 
         return users;
     }
