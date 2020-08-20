@@ -3,17 +3,14 @@ package org.troy.controller;
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
 import org.troy.database.entity.Users;
+import org.troy.views.orders.FoodMenuAdminDialog;
+import org.troy.views.orders.FoodMenuDialog;
 import org.troy.views.users.AdminLoginDialog;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -70,13 +67,13 @@ public class BillingAdminApp extends JFrame {
         btnOrderMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-//                //create the FoodMenuDialog and pass current dialog reference to set Visible it later
-//                FoodMenuDialog dialog = new FoodMenuDialog(BillingApp.this, foodDAO, users);
-//
-//                //dissolve the current dialog.
-//                dispose();
-//                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//                dialog.setVisible(true);
+                //create the FoodMenuDialog and pass current dialog reference to set Visible it later
+                FoodMenuAdminDialog dialog = new FoodMenuAdminDialog(BillingAdminApp.this, foodDAO, users);
+
+                //dissolve the current dialog.
+                dispose();
+                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                dialog.setVisible(true);
 
 
             }

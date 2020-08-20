@@ -1,5 +1,6 @@
 package org.troy.views.orders;
 
+import org.troy.controller.BillingAdminApp;
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.entity.Items;
 import org.troy.database.entity.Users;
@@ -33,9 +34,9 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class FoodMenuDialog extends JDialog {
+public class FoodMenuAdminDialog extends JDialog {
 
-    private BillingApp frame;
+    private BillingAdminApp frame;
 
     private ItemDaoImpl foodDAO;
     private Users users;
@@ -53,7 +54,7 @@ public class FoodMenuDialog extends JDialog {
     JButton btnProceedToCheckout;
 
 
-    public FoodMenuDialog(final BillingApp frame, final ItemDaoImpl foodDAO, final Users users) {
+    public FoodMenuAdminDialog(final BillingAdminApp frame, final ItemDaoImpl foodDAO, final Users users) {
 
         this.frame = frame;
         this.foodDAO = foodDAO;
@@ -75,7 +76,7 @@ public class FoodMenuDialog extends JDialog {
         });
 
         setTitle("HuyNQ Cafeteria - Order Menu");
-        setBounds(100, 100, 680, 520);
+        setBounds(200, 200, 880, 720);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -91,68 +92,75 @@ public class FoodMenuDialog extends JDialog {
         flowLayout.setAlignment(FlowLayout.LEFT);
         centerpanel.add(addpanel, BorderLayout.SOUTH);
 
-        JLabel lblProductQuantity = new JLabel("Product Quantity");
-        lblProductQuantity.setHorizontalAlignment(SwingConstants.CENTER);
-        addpanel.add(lblProductQuantity);
+        JPanel addNew = new JPanel();
+        contentPanel.add(addNew, BorderLayout.SOUTH);
+        addNew.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        Component horizontalStrut = Box.createHorizontalStrut(15);
-        addpanel.add(horizontalStrut);
+        btnBack = new JButton("Add new drink");
+        addNew.add(btnBack);
 
-        textField = new JTextField();
-        addpanel.add(textField);
-        textField.setColumns(10);
+//        JLabel lblProductQuantity = new JLabel("Product Quantity");
+//        lblProductQuantity.setHorizontalAlignment(SwingConstants.CENTER);
+//        addpanel.add(lblProductQuantity);
+//
+//        Component horizontalStrut = Box.createHorizontalStrut(15);
+//        addpanel.add(horizontalStrut);
+//
+//        textField = new JTextField();
+//        addpanel.add(textField);
+//        textField.setColumns(10);
 
-        Component horizontalStrut_2 = Box.createHorizontalStrut(35);
-        addpanel.add(horizontalStrut_2);
-
-        btnAddToCart = new JButton("Add to Cart");
-        btnAddToCart.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                try{
-                    int row = foodtable.getSelectedRow();
-                    if (row < 0){
-                        JOptionPane.showMessageDialog(FoodMenuDialog.this, "You must select a food item",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    //System.out.println(row);
-                    //System.out.println(tempFoodItem);
-
-                    Items tempFoodItem = (Items)foodtable.getValueAt(row, FoodTableModel.OBJECT_COL);
-                    String s = textField.getText();
-
-					/*
-					 if(s == "" || s.trim() == ""){
-
-						JOptionPane.showMessageDialog(FoodMenuDialog.this, "You must select a food item",
-								"Error", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					*/
-
-                    int quantity = Integer.parseInt(s);
-                    if (quantity <= 0) {
-                        JOptionPane.showMessageDialog(FoodMenuDialog.this, "Quantity must be greater than 0!",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    //System.out.println(quantity);
-                    foodDAO.updateQuantity(tempFoodItem, quantity);
-
-                    refreshFoodItemView();
-                    JOptionPane.showMessageDialog(FoodMenuDialog.this, "Food item added to cart.",
-                            "Cart", JOptionPane.INFORMATION_MESSAGE);
-                }
-                catch(Exception e){
-                    JOptionPane.showMessageDialog(FoodMenuDialog.this, "Error adding product to cart: "
-                            + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-
-            }
-        });
-        addpanel.add(btnAddToCart);
+//        Component horizontalStrut_2 = Box.createHorizontalStrut(35);
+//        addpanel.add(horizontalStrut_2);
+//
+//        btnAddToCart = new JButton("Add to Cart");
+//        btnAddToCart.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent ae) {
+//
+//                try{
+//                    int row = foodtable.getSelectedRow();
+//                    if (row < 0){
+//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "You must select a food item",
+//                                "Error", JOptionPane.ERROR_MESSAGE);
+//                        return;
+//                    }
+//                    //System.out.println(row);
+//                    //System.out.println(tempFoodItem);
+//
+//                    Items tempFoodItem = (Items)foodtable.getValueAt(row, FoodTableModel.OBJECT_COL);
+//                    String s = textField.getText();
+//
+//					/*
+//					 if(s == "" || s.trim() == ""){
+//
+//						JOptionPane.showMessageDialog(FoodMenuDialog.this, "You must select a food item",
+//								"Error", JOptionPane.ERROR_MESSAGE);
+//						return;
+//					}
+//					*/
+//
+//                    int quantity = Integer.parseInt(s);
+//                    if (quantity <= 0) {
+//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Quantity must be greater than 0!",
+//                                "Error", JOptionPane.ERROR_MESSAGE);
+//                        return;
+//                    }
+//                    //System.out.println(quantity);
+//                    foodDAO.updateQuantity(tempFoodItem, quantity);
+//
+//                    refreshFoodItemView();
+//                    JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Food item added to cart.",
+//                            "Cart", JOptionPane.INFORMATION_MESSAGE);
+//                }
+//                catch(Exception e){
+//                    JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Error adding product to cart: "
+//                            + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//
+//
+//            }
+//        });
+//        addpanel.add(btnAddToCart);
 
         JPanel toplabelpanel = new JPanel();
         centerpanel.add(toplabelpanel, BorderLayout.NORTH);
@@ -166,7 +174,7 @@ public class FoodMenuDialog extends JDialog {
         Component rigidArea = Box.createRigidArea(new Dimension(20, 5));
         toplabelpanel.add(rigidArea);
 
-        JLabel lblPleaseSelectThe = new JLabel("Please select the item and click Add");
+        JLabel lblPleaseSelectThe = new JLabel("Modify Menu");
         lblPleaseSelectThe.setHorizontalAlignment(SwingConstants.CENTER);
         lblPleaseSelectThe.setFont(new Font("Tahoma", Font.BOLD, 12));
         toplabelpanel.add(lblPleaseSelectThe);
@@ -206,47 +214,34 @@ public class FoodMenuDialog extends JDialog {
         });
         bottombtnpanel.add(btnBack);
 
-        Component horizontalStrut_1 = Box.createHorizontalStrut(180);
-        bottombtnpanel.add(horizontalStrut_1);
+//        Component horizontalStrut_1 = Box.createHorizontalStrut(180);
+//        bottombtnpanel.add(horizontalStrut_1);
 
-        btnProceedToCheckout = new JButton("Proceed to Checkout");
-        btnProceedToCheckout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-
-                try {
-                    boolean check = foodDAO.isEmptyQuantityColumn();
-                    if(!check){
-                        JOptionPane.showMessageDialog(FoodMenuDialog.this, "Your cart is empty",
-                                "Can't proceed", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                CheckoutDialog dialog = new CheckoutDialog(FoodMenuDialog.this, frame, foodDAO, users);
-                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                dispose();	//dissolve the current window
-                dialog.setVisible(true);
-                dialog.setNetAmountLabel();
-            }
-        });
-        bottombtnpanel.add(btnProceedToCheckout);
-
-//        JPanel rightBottombtnpanel = new JPanel();
-//        contentPanel.add(rightBottombtnpanel, BorderLayout.EAST);
-//        rightBottombtnpanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-//
-//        btnRefresh = new JButton("Refresh");
-//        btnRefresh.addActionListener(new ActionListener() {
+//        btnProceedToCheckout = new JButton("Proceed to Checkout");
+//        btnProceedToCheckout.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent arg0) {
-//                foodDAO.vacateQuantityColumn();
-//                refreshFoodItemView();
+//
+//                try {
+//                    boolean check = foodDAO.isEmptyQuantityColumn();
+//                    if(!check){
+//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Your cart is empty",
+//                                "Can't proceed", JOptionPane.ERROR_MESSAGE);
+//                        return;
+//                    }
+//
+//                } catch (SQLException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//
+//                CheckoutDialog dialog = new CheckoutDialog(FoodMenuAdminDialog.this, frame, foodDAO, users);
+//                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+//                dispose();	//dissolve the current window
+//                dialog.setVisible(true);
+//                dialog.setNetAmountLabel();
 //            }
 //        });
-//        rightBottombtnpanel.add(btnRefresh);
+//        bottombtnpanel.add(btnProceedToCheckout);
     }
 
     private void alignTable(){

@@ -70,7 +70,7 @@ public class CheckoutDialog extends JDialog {
         });
 
         setTitle("HuyNQ Cafeteria - Checkout");
-        setBounds(100, 100, 640, 380);
+        setBounds(200, 200, 840, 580);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
