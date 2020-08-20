@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement myStmt = null;
         ResultSet myRs = null;
         try{
-            String query = "select * from orders where orders.customer_id=?";
+            String query = "select * from orders where orders.user_id=?";
             myStmt = myConn.prepareStatement(query);
 
             myStmt.setInt(1, users.getId());
@@ -54,7 +54,7 @@ public class OrderDaoImpl implements OrderDao {
 
     private Order convertRowToOrder(ResultSet myRs) throws SQLException{
         int id = myRs.getInt("id");
-        int customerId = myRs.getInt("customer_id");
+        int customerId = myRs.getInt("user_id");
         int orderTotal = myRs.getInt("order_total");
         Order tempOrder = new Order(id, customerId, orderTotal);
         return tempOrder;

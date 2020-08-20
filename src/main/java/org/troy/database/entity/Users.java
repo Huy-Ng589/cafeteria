@@ -2,7 +2,7 @@ package org.troy.database.entity;
 
 public class Users {
 
-    private int id;
+    private int user_id;
     private String firstName;
     private String lastName;
     private String username;
@@ -19,14 +19,14 @@ public class Users {
 
     public Users(int id, String fname, String lname, String uname, String pwd, String perm){
         this(fname, lname, uname, pwd, perm);
-        this.id = id;
+        this.user_id = id;
     }
 
     public int getId(){
-        return id;
+        return user_id;
     }
     public void setId(int id){
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getLastName(){
@@ -67,6 +67,6 @@ public class Users {
 
     public String toString(){
         return String.format("User [Id = %s, First name = %s, Last name = %s, Username = %s, Permission = %s]",
-                id, firstName, lastName, username, permission);
+                user_id, firstName, lastName, username, permission);
     }
 }

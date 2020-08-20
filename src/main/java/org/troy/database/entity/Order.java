@@ -1,9 +1,12 @@
 package org.troy.database.entity;
 
+import java.util.Date;
+
 public class Order {
     private int orderId;
     private int customerId;
     private int orderTotal;
+    //private Date date_time;
 
     public Order(int id, int cust_id, int total){
         orderId = id;

@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     private Users convertRowToUser(ResultSet myRs) throws SQLException{
-        int id = myRs.getInt("id");
+        int id = myRs.getInt("user_id");
         String firstName = myRs.getString("first_name");
         String lastName = myRs.getString("last_name");
         String username = myRs.getString("username");
