@@ -3,9 +3,8 @@ package org.troy.controller;
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
 import org.troy.database.entity.Users;
-import org.troy.views.orders.FoodMenuAdminDialog;
-import org.troy.views.orders.FoodMenuDialog;
-import org.troy.views.users.AdminLoginDialog;
+import org.troy.views.admin.FoodMenuAdminDialog;
+import org.troy.views.admin.AdminLoginDialog;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

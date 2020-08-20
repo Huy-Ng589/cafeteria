@@ -7,13 +7,16 @@ public class Items {
     private int quantity;
     private String imageURL;
 
-    public Items(int itemId, String productName, int price, int quantity, String imageURL){
-
-        this.itemId = itemId;
+    public Items(String productName, int price, String imageURL) {
         this.productName = productName;
         this.price = price;
-        this.quantity = quantity;
         this.imageURL = imageURL;
+    }
+
+    public Items(int itemId, String productName, int price, int quantity, String imageURL){
+        this(productName, price, imageURL);
+        this.itemId = itemId;
+        this.quantity = quantity;
     }
 
     public int getItemId() {

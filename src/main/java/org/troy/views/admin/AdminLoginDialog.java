@@ -1,4 +1,4 @@
-package org.troy.views.users;
+package org.troy.views.admin;
 
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
@@ -6,6 +6,7 @@ import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
 import org.troy.controller.BillingAdminApp;
 import org.troy.views.DashboardDialog;
+import org.troy.views.users.UserSignUpDialog;
 
 import java.awt.*;
 

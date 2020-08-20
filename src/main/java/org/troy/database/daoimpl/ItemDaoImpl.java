@@ -3,6 +3,7 @@ package org.troy.database.daoimpl;
 import org.troy.database.dao.ItemDao;
 import org.troy.database.entity.Items;
 import org.troy.database.entity.Users;
+import org.troy.util.PasswordUtils;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -45,6 +46,25 @@ public class ItemDaoImpl implements ItemDao {
                 myStmt.close();
         }
 
+    }
+
+    // Add new item
+    public void addNewItem(Items item) throws SQLException {
+        PreparedStatement myStmt = null;
+        try{
+
+            myStmt = myConn.prepareStatement("insert into items"
+                    +"(product_name, price, image_url)"
+                    + " values (?, ?, ?)");
+            myStmt.setString(1, item.getProductName());
+            myStmt.setInt(2, item.getPrice());
+            myStmt.setString(3, item.getImageURL());
+            myStmt.executeUpdate();
+        }
+        finally{
+            if(myStmt!= null)
+                myStmt.close();
+        }
     }
 
     //will be used to delete the item from cart, i.e, set quantity to null & refresh the cart table view.

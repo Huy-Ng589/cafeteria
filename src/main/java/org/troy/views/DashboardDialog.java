@@ -3,7 +3,7 @@ package org.troy.views;
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
 import org.troy.database.daoimpl.UserDaoImpl;
-import org.troy.views.users.AdminLoginDialog;
+import org.troy.views.admin.AdminLoginDialog;
 import org.troy.views.users.UserLoginDialog;
 
 import javax.swing.*;

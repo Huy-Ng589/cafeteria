@@ -1,11 +1,9 @@
-package org.troy.views.orders;
+package org.troy.views.admin;
 
 import org.troy.controller.BillingAdminApp;
 import org.troy.database.daoimpl.ItemDaoImpl;
-import org.troy.database.entity.Items;
 import org.troy.database.entity.Users;
 import org.troy.model.FoodTableModel;
-import org.troy.controller.BillingApp;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -30,7 +28,6 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -48,10 +45,8 @@ public class FoodMenuAdminDialog extends JDialog {
     private JTable foodtable;
     private FoodTableModel tableModel;
 
-    JButton btnAddToCart;
-    JButton btnRefresh;
     JButton btnBack;
-    JButton btnProceedToCheckout;
+    JButton btnAddNew;
 
 
     public FoodMenuAdminDialog(final BillingAdminApp frame, final ItemDaoImpl foodDAO, final Users users) {
@@ -76,7 +71,7 @@ public class FoodMenuAdminDialog extends JDialog {
         });
 
         setTitle("HuyNQ Cafeteria - Order Menu");
-        setBounds(200, 200, 880, 720);
+        setBounds(100, 100, 880, 620);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -92,12 +87,6 @@ public class FoodMenuAdminDialog extends JDialog {
         flowLayout.setAlignment(FlowLayout.LEFT);
         centerpanel.add(addpanel, BorderLayout.SOUTH);
 
-        JPanel addNew = new JPanel();
-        contentPanel.add(addNew, BorderLayout.SOUTH);
-        addNew.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-
-        btnBack = new JButton("Add new drink");
-        addNew.add(btnBack);
 
 //        JLabel lblProductQuantity = new JLabel("Product Quantity");
 //        lblProductQuantity.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,7 +173,6 @@ public class FoodMenuAdminDialog extends JDialog {
 
         foodtable = new JTable();
 
-
         try{
             tableModel = new FoodTableModel(foodDAO.getAllItems());
             foodtable.setModel(tableModel);
@@ -193,13 +181,11 @@ public class FoodMenuAdminDialog extends JDialog {
             tabelscrollPane.setViewportView(foodtable);
             alignTable();
 
-
         }
         catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
 
         JPanel bottombtnpanel = new JPanel();
         contentPanel.add(bottombtnpanel, BorderLayout.SOUTH);
@@ -214,34 +200,24 @@ public class FoodMenuAdminDialog extends JDialog {
         });
         bottombtnpanel.add(btnBack);
 
-//        Component horizontalStrut_1 = Box.createHorizontalStrut(180);
-//        bottombtnpanel.add(horizontalStrut_1);
+        Component horizontalStrut_1 = Box.createHorizontalStrut(320);
+        bottombtnpanel.add(horizontalStrut_1);
 
-//        btnProceedToCheckout = new JButton("Proceed to Checkout");
-//        btnProceedToCheckout.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent arg0) {
-//
-//                try {
-//                    boolean check = foodDAO.isEmptyQuantityColumn();
-//                    if(!check){
-//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Your cart is empty",
-//                                "Can't proceed", JOptionPane.ERROR_MESSAGE);
-//                        return;
-//                    }
-//
-//                } catch (SQLException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//
-//                CheckoutDialog dialog = new CheckoutDialog(FoodMenuAdminDialog.this, frame, foodDAO, users);
-//                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//                dispose();	//dissolve the current window
-//                dialog.setVisible(true);
-//                dialog.setNetAmountLabel();
-//            }
-//        });
-//        bottombtnpanel.add(btnProceedToCheckout);
+        btnAddNew = new JButton("Add new drink");
+        btnAddNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddNewItemDialog dialog = new AddNewItemDialog(FoodMenuAdminDialog.this, foodDAO);
+                dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+                //dissolve current dialog and create new dialog
+                dispose();
+                //setVisible(false);    can use this also but dispose() is preferred to release memory
+                dialog.setVisible(true);
+                refreshFoodItemView();
+            }
+        });
+        bottombtnpanel.add(btnAddNew);
     }
 
     private void alignTable(){

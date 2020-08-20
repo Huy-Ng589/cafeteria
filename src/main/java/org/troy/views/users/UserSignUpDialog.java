@@ -2,7 +2,7 @@ package org.troy.views.users;
 
 import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
-import org.troy.views.users.AdminLoginDialog;
+import org.troy.views.admin.AdminLoginDialog;
 
 import java.awt.BorderLayout;
 import javax.swing.*;

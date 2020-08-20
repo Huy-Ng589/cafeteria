@@ -2,16 +2,12 @@ package org.troy.model;
 
 import org.troy.database.entity.Items;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class FoodTableModel extends AbstractTableModel {
-
-    private BufferedImage image;
 
     public static final int OBJECT_COL = -1;
     private static final int ITEM_ID_COL = 0;
@@ -43,11 +39,8 @@ public class FoodTableModel extends AbstractTableModel {
 
     public Object getValueAt(int row, int col){
         Items tempFood = foodItems.get(row);
-//        try {
-//            image = ImageIO.read(getClass().getResource(tempFood.getImageURL()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource((String)tempFood.getImageURL()));
+
         switch(col){
             case ITEM_ID_COL:
                 return tempFood.getItemId();
