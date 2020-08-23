@@ -3,7 +3,6 @@ package org.troy.database.daoimpl;
 import org.troy.database.dao.ItemDao;
 import org.troy.database.entity.Items;
 import org.troy.database.entity.Users;
-import org.troy.util.PasswordUtils;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -99,15 +98,17 @@ public class ItemDaoImpl implements ItemDao {
         }
     }
 
-    public int addOrder(Users users, int netAmount) throws SQLException{
+    @Override
+    public int addOrder(Users users, int netAmount, Date dt) throws SQLException {
         PreparedStatement myStmt = null;
         Statement myStmt1 = null;
         ResultSet myRs = null;
         try{
-            myStmt = myConn.prepareStatement("insert into orders (user_id, order_total) "
-                    + "values(?, ?)");
+            myStmt = myConn.prepareStatement("insert into orders (user_id, order_total, date_time) "
+                    + "values(?, ?, ?)");
             myStmt.setInt(1, users.getId());
             myStmt.setInt(2, netAmount);
+            myStmt.setDate(3, dt);
             myStmt.executeUpdate();
 
             myStmt1 = myConn.createStatement();
@@ -126,7 +127,6 @@ public class ItemDaoImpl implements ItemDao {
             if(myRs != null)
                 myRs.close();
         }
-
     }
 
     public void vacateQuantityColumn(){
@@ -216,19 +216,4 @@ public class ItemDaoImpl implements ItemDao {
                 myStmt.close();
         }
     }
-
-//    public static void main(String [] args){
-//        try {
-//            FoodDAO foodDAO = new FoodDAO();
-//            List<FoodItem> list = foodDAO.getAllFoodItems();
-//            for(FoodItem temp : list){
-//                System.out.println(temp);
-//            }
-//            int totalAmt = foodDAO.getNetAmount();
-//            System.out.println(totalAmt);
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
 }

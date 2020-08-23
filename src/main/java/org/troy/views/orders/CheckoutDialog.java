@@ -26,6 +26,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import java.sql.Date;
+import java.util.Calendar;
 
 @SuppressWarnings("serial")
 public class CheckoutDialog extends JDialog {
@@ -43,6 +45,7 @@ public class CheckoutDialog extends JDialog {
     private JButton btnProceed;
     private JLabel netAmountLabel;
     private int netAmount;
+    private Date datet;
 
     private CartTableModel tableModel ;
 
@@ -69,7 +72,7 @@ public class CheckoutDialog extends JDialog {
             }
         });
 
-        setTitle("HuyNQ Cafeteria - Checkout");
+        setTitle("Cafeteria System - Checkout");
         setBounds(100, 100, 840, 580);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -227,7 +230,8 @@ public class CheckoutDialog extends JDialog {
         }
 
         try {
-            int orderId = foodDAO.addOrder(users, netAmount);	//insert the order details in order menu.
+            Date date = new Date(Calendar.getInstance().getTime().getTime());
+            int orderId = foodDAO.addOrder(users, netAmount, date);	//insert the order details in order menu.
             foodDAO.vacateQuantityColumn();
             JOptionPane.showMessageDialog(CheckoutDialog.this, "Order id: " +orderId,
                     "Order placed successfully", JOptionPane.INFORMATION_MESSAGE);

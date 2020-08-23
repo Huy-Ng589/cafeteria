@@ -2,6 +2,7 @@ package org.troy.model;
 
 import org.troy.database.entity.Order;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -12,8 +13,9 @@ public class OrderHistoryTableModel extends AbstractTableModel {
     private static final int OBJECT_COL = -1;
     private static final int ORDER_ID_COL = 0;
     private static final int ORDER_TOTAL_COL = 1;
+    private static final int DATE_TIME = 2;
 
-    private String columnNames[] = {"Order Id", "Order Total"};
+    private String columnNames[] = {"Order Id", "Order Total", "Date"};
 
     private List<Order> orderHistory;
 
@@ -40,6 +42,8 @@ public class OrderHistoryTableModel extends AbstractTableModel {
                 return temp.getOrderId();
             case ORDER_TOTAL_COL:
                 return temp.getOrderTotal();
+            case DATE_TIME:
+                return temp.getDate_time();
             case OBJECT_COL:
                 return temp;
             default:

@@ -6,6 +6,8 @@ import org.troy.util.PasswordUtils;
 
 import java.io.FileInputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class UserDaoImpl implements UserDao {
@@ -25,6 +27,41 @@ public class UserDaoImpl implements UserDao {
 
         System.out.println("User DAO - DB connection succesful to " + dburl);
 
+    }
+
+    public List<Users> getAllUser() throws SQLException {
+        List<Users> list = new ArrayList<>();
+        Statement myStmt = null;
+        ResultSet myRes = null;
+        try{
+            myStmt = myConn.createStatement();
+            myRes = myStmt.executeQuery("select * from users order by user_id");
+
+            while(myRes.next()){
+                Users temp = convertRowToUser(myRes);
+                list.add(temp);
+            }
+            return list;
+        }
+        finally{
+            if(myRes != null)
+                myRes.close();
+            if(myStmt != null)
+                myStmt.close();
+        }
+    }
+
+    public void deleteUser(Users temp) throws SQLException {
+        PreparedStatement myStmt = null;
+        try{
+            myStmt = myConn.prepareStatement("delete from users where user_id=?");
+            myStmt.setInt(1, temp.getId());
+            myStmt.executeUpdate();
+        }
+        finally{
+            if(myStmt != null)
+                myStmt.close();
+        }
     }
 
     public void addUser(Users users) throws SQLException {

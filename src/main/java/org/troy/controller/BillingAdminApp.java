@@ -2,9 +2,12 @@ package org.troy.controller;
 
 import org.troy.database.daoimpl.ItemDaoImpl;
 import org.troy.database.daoimpl.OrderDaoImpl;
+import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
 import org.troy.views.admin.FoodMenuAdminDialog;
 import org.troy.views.admin.AdminLoginDialog;
+import org.troy.views.admin.UserManageDialog;
+import org.troy.views.orders.OrderHistoryDialog;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 @SuppressWarnings("serial")
 public class BillingAdminApp extends JFrame {
@@ -26,14 +30,14 @@ public class BillingAdminApp extends JFrame {
     private JButton btnNewButton;
 
     private ItemDaoImpl foodDAO;
-    private OrderDaoImpl orderDAO;
+    private UserDaoImpl userDAO;
 
     private Users users;
 
-    public BillingAdminApp(final AdminLoginDialog adminLoginDialog, OrderDaoImpl orderDAO, final ItemDaoImpl foodDAO, final Users users) {
+    public BillingAdminApp(final AdminLoginDialog adminLoginDialog, UserDaoImpl userDAO, final ItemDaoImpl foodDAO, final Users users) {
 
         this.adminLoginDialog = adminLoginDialog;
-        this.orderDAO= orderDAO;
+        this.userDAO= userDAO;
         this.foodDAO = foodDAO;
         this.users = users;
         System.out.println("Logged in as "+ this.users);
@@ -48,7 +52,7 @@ public class BillingAdminApp extends JFrame {
             }
         });
 
-        setTitle("HuyNQ Cafeteria");
+        setTitle("Cafeteria System");
         setBounds(100, 100, 550, 380);
         setResizable(false);
         contentPane = new JPanel();
@@ -81,11 +85,20 @@ public class BillingAdminApp extends JFrame {
         btnOrderMenu.setBounds(94, 121, 161, 67);
         contentPane.add(btnOrderMenu);
 
-        btnNewButton = new JButton("VIEW HISTORY");
+        btnNewButton = new JButton("MANAGE USER");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-
-                //displayOrderHistoryDialog();
+                UserManageDialog dialog = new UserManageDialog(BillingAdminApp.this, userDAO, users);
+                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                try {
+                    dialog.setTableModel();
+                    dialog.setVisible(true);
+                }
+                catch (SQLException e) {
+                    JOptionPane.showMessageDialog(BillingAdminApp.this, "Error retrieving User Table",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
             }
         });
         btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));

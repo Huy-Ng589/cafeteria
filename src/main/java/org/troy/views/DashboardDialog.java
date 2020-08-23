@@ -31,7 +31,7 @@ public class DashboardDialog extends JFrame {
             }
         });
 
-        setTitle("HuyNQ Cafeteria");
+        setTitle("Cafeteria System");
         setBounds(100, 100, 550, 380);
         setResizable(false);
         contentPane = new JPanel();

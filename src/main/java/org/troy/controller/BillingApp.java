@@ -56,7 +56,7 @@ public class BillingApp extends JFrame {
             }
         });
 
-        setTitle("HuyNQ Cafeteria");
+        setTitle("Cafeteria System");
         setBounds(100, 100, 550, 380);
         setResizable(false);
         contentPane = new JPanel();
@@ -93,7 +93,7 @@ public class BillingApp extends JFrame {
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                //displayOrderHistoryDialog();
+                displayOrderHistoryDialog();
             }
         });
         btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -121,19 +121,19 @@ public class BillingApp extends JFrame {
         contentPane.add(customerLabel);
     }
 
-//    private void displayOrderHistoryDialog(){
-//        OrderHistoryDialog dialog = new OrderHistoryDialog(BillingAdminApp.this, orderDAO, users);
-//        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//        try {
-//            dialog.setTableModel();
-//            dialog.setVisible(true);
-//        }
-//        catch (SQLException e) {
-//            JOptionPane.showMessageDialog(BillingAdminApp.this, "Error retrieving Order History",
-//                    "Error", JOptionPane.ERROR_MESSAGE);
-//            e.printStackTrace();
-//        }
-//    }
+    private void displayOrderHistoryDialog(){
+        OrderHistoryDialog dialog = new OrderHistoryDialog(BillingApp.this, orderDAO, users);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        try {
+            dialog.setTableModel();
+            dialog.setVisible(true);
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(BillingApp.this, "Error retrieving Order History",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
 
 //    public static void main(String[] args) {
 //        EventQueue.invokeLater(new Runnable() {

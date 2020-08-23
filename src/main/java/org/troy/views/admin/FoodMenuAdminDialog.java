@@ -70,7 +70,7 @@ public class FoodMenuAdminDialog extends JDialog {
             }
         });
 
-        setTitle("HuyNQ Cafeteria - Order Menu");
+        setTitle("Cafeteria System - Item Menu");
         setBounds(100, 100, 880, 620);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -86,70 +86,6 @@ public class FoodMenuAdminDialog extends JDialog {
         flowLayout.setVgap(10);
         flowLayout.setAlignment(FlowLayout.LEFT);
         centerpanel.add(addpanel, BorderLayout.SOUTH);
-
-
-//        JLabel lblProductQuantity = new JLabel("Product Quantity");
-//        lblProductQuantity.setHorizontalAlignment(SwingConstants.CENTER);
-//        addpanel.add(lblProductQuantity);
-//
-//        Component horizontalStrut = Box.createHorizontalStrut(15);
-//        addpanel.add(horizontalStrut);
-//
-//        textField = new JTextField();
-//        addpanel.add(textField);
-//        textField.setColumns(10);
-
-//        Component horizontalStrut_2 = Box.createHorizontalStrut(35);
-//        addpanel.add(horizontalStrut_2);
-//
-//        btnAddToCart = new JButton("Add to Cart");
-//        btnAddToCart.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent ae) {
-//
-//                try{
-//                    int row = foodtable.getSelectedRow();
-//                    if (row < 0){
-//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "You must select a food item",
-//                                "Error", JOptionPane.ERROR_MESSAGE);
-//                        return;
-//                    }
-//                    //System.out.println(row);
-//                    //System.out.println(tempFoodItem);
-//
-//                    Items tempFoodItem = (Items)foodtable.getValueAt(row, FoodTableModel.OBJECT_COL);
-//                    String s = textField.getText();
-//
-//					/*
-//					 if(s == "" || s.trim() == ""){
-//
-//						JOptionPane.showMessageDialog(FoodMenuDialog.this, "You must select a food item",
-//								"Error", JOptionPane.ERROR_MESSAGE);
-//						return;
-//					}
-//					*/
-//
-//                    int quantity = Integer.parseInt(s);
-//                    if (quantity <= 0) {
-//                        JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Quantity must be greater than 0!",
-//                                "Error", JOptionPane.ERROR_MESSAGE);
-//                        return;
-//                    }
-//                    //System.out.println(quantity);
-//                    foodDAO.updateQuantity(tempFoodItem, quantity);
-//
-//                    refreshFoodItemView();
-//                    JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Food item added to cart.",
-//                            "Cart", JOptionPane.INFORMATION_MESSAGE);
-//                }
-//                catch(Exception e){
-//                    JOptionPane.showMessageDialog(FoodMenuAdminDialog.this, "Error adding product to cart: "
-//                            + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//                }
-//
-//
-//            }
-//        });
-//        addpanel.add(btnAddToCart);
 
         JPanel toplabelpanel = new JPanel();
         centerpanel.add(toplabelpanel, BorderLayout.NORTH);
@@ -211,7 +147,7 @@ public class FoodMenuAdminDialog extends JDialog {
                 dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
                 //dissolve current dialog and create new dialog
-                dispose();
+                //dispose();
                 //setVisible(false);    can use this also but dispose() is preferred to release memory
                 dialog.setVisible(true);
                 refreshFoodItemView();

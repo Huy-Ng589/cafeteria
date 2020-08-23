@@ -4,6 +4,7 @@ import org.troy.database.entity.Items;
 import org.troy.database.entity.Users;
 
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.List;
 
 public interface ItemDao {
@@ -14,7 +15,7 @@ public interface ItemDao {
 
     int getNetAmount() throws SQLException;
 
-    int addOrder(Users users, int netAmount) throws SQLException;
+    int addOrder(Users users, int netAmount, Date dt) throws SQLException;
 
     void vacateQuantityColumn();
 

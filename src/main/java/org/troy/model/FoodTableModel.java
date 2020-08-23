@@ -39,7 +39,9 @@ public class FoodTableModel extends AbstractTableModel {
 
     public Object getValueAt(int row, int col){
         Items tempFood = foodItems.get(row);
-        //ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource((String)tempFood.getImageURL()));
+//        JLabel imageLabel = new JLabel();
+//        ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource(tempFood.getImageURL()));
+//        imageLabel.setIcon(image);
 
         switch(col){
             case ITEM_ID_COL:

@@ -53,10 +53,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     private Order convertRowToOrder(ResultSet myRs) throws SQLException{
-        int id = myRs.getInt("id");
+        int id = myRs.getInt("order_id");
         int customerId = myRs.getInt("user_id");
         int orderTotal = myRs.getInt("order_total");
-        Order tempOrder = new Order(id, customerId, orderTotal);
+        Date date_time = myRs.getDate("date_time");
+        Order tempOrder = new Order(id, customerId, orderTotal, date_time);
         return tempOrder;
 
     }

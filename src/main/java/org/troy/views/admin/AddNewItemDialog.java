@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class AddNewItemDialog extends JDialog {
 
-    private FoodMenuAdminDialog loginDialog;
+    private FoodMenuAdminDialog foodDialog;
 
     private ItemDaoImpl itemDAO;
 
@@ -22,18 +22,14 @@ public class AddNewItemDialog extends JDialog {
     private JTextField productNameTextField;
     private JTextField priceTextField;
     private JTextField iurlTextField;
-    private JLabel lblPassword;
-    private JPasswordField passwordField;
-    private JPasswordField cnfPasswordField;
-    private JComboBox permission;
-    private JButton btnCreateAccount;
+    private JButton btnAddItem;
 
     public AddNewItemDialog(FoodMenuAdminDialog dialog, ItemDaoImpl itemDAO){
         this();
         this.itemDAO = itemDAO;
 
         //It"ll be used to make the dialog visible again
-        this.loginDialog = dialog;
+        this.foodDialog = dialog;
     }
 
     public AddNewItemDialog() {
@@ -42,11 +38,10 @@ public class AddNewItemDialog extends JDialog {
             @Override
             public void windowClosing(WindowEvent we)
             {
-                int PromptResult = JOptionPane.showConfirmDialog(null, "Exit application ?",
+                int PromptResult = JOptionPane.showConfirmDialog(null, "Cancel add item?",
                         "Confirm exit", JOptionPane.OK_CANCEL_OPTION);
-                if(PromptResult== JOptionPane.OK_OPTION)
-                {
-                    System.exit(0);
+                if(PromptResult== JOptionPane.OK_OPTION) {
+                    dispose();
                 }
             }
         });
@@ -100,29 +95,29 @@ public class AddNewItemDialog extends JDialog {
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                loginDialog.setVisible(true);
+                foodDialog.setVisible(true);
             }
         });
         btnBack.setFont(new Font("Lucida Fax", Font.BOLD, 13));
         btnBack.setBounds(51, 116, 100, 23);
         contentPanel.add(btnBack);
 
-        btnCreateAccount = new JButton("Add Item");
-        btnCreateAccount.addActionListener(new ActionListener() {
+        btnAddItem = new JButton("Add Item");
+        btnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 addItem();
             }
         });
-        btnCreateAccount.setFont(new Font("Lucida Fax", Font.BOLD, 13));
-        btnCreateAccount.setBounds(193, 116, 100, 23);
-        contentPanel.add(btnCreateAccount);
+        btnAddItem.setFont(new Font("Lucida Fax", Font.BOLD, 13));
+        btnAddItem.setBounds(193, 116, 100, 23);
+        contentPanel.add(btnAddItem);
 
         //Adding window event to handle the operations performed as the signUo Dialog is closed
         addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
 
                 //display the login Dialog.
-                loginDialog.setVisible(true);
+                foodDialog.setVisible(true);
             }
         });
     }
@@ -137,10 +132,10 @@ public class AddNewItemDialog extends JDialog {
 
         try {
             itemDAO.addNewItem(item);
-            JOptionPane.showMessageDialog(loginDialog, "Add new successfully",
+            JOptionPane.showMessageDialog(foodDialog, "Add new successfully",
                     "Success!", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-            loginDialog.setVisible(true);
+            foodDialog.setVisible(true);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(AddNewItemDialog.this,
                     "Error adding item" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

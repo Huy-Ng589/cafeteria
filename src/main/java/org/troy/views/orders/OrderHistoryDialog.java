@@ -1,10 +1,10 @@
 package org.troy.views.orders;
 
+import org.troy.controller.BillingApp;
 import org.troy.database.daoimpl.OrderDaoImpl;
 import org.troy.database.entity.Order;
 import org.troy.database.entity.Users;
 import org.troy.model.OrderHistoryTableModel;
-import org.troy.controller.BillingAdminApp;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class OrderHistoryDialog extends JDialog {
-    private BillingAdminApp frame;
+    private BillingApp frame;
 
     private OrderDaoImpl orderDAO;
     private JTable orderHistoryTable;
@@ -33,7 +33,7 @@ public class OrderHistoryDialog extends JDialog {
 
     private JPanel buttonPanel;
 
-    public OrderHistoryDialog(BillingAdminApp frame, OrderDaoImpl orderDAO, Users users){
+    public OrderHistoryDialog(BillingApp frame, OrderDaoImpl orderDAO, Users users){
         this();
         this.frame = frame;
         this.orderDAO = orderDAO;

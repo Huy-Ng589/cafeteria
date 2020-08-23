@@ -3,6 +3,7 @@ package org.troy.views.users;
 import org.troy.database.daoimpl.UserDaoImpl;
 import org.troy.database.entity.Users;
 import org.troy.views.admin.AdminLoginDialog;
+import org.troy.views.admin.UserManageDialog;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
@@ -18,7 +19,7 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class UserSignUpDialog extends JDialog {
 
-    private AdminLoginDialog loginDialog;
+    private UserManageDialog userManageDialogDialog;
 
     private UserDaoImpl userDAO;
 
@@ -32,12 +33,12 @@ public class UserSignUpDialog extends JDialog {
     private JComboBox permission;
     private JButton btnCreateAccount;
 
-    public UserSignUpDialog(AdminLoginDialog dialog, UserDaoImpl userDAO){
+    public UserSignUpDialog(UserManageDialog dialog, UserDaoImpl userDAO){
         this();
         this.userDAO = userDAO;
 
         //It"ll be used to make the dialog visible again
-        this.loginDialog = dialog;
+        this.userManageDialogDialog = dialog;
     }
 
     public UserSignUpDialog() {
@@ -46,16 +47,15 @@ public class UserSignUpDialog extends JDialog {
             @Override
             public void windowClosing(WindowEvent we)
             {
-                int PromptResult = JOptionPane.showConfirmDialog(null, "Exit application ?",
+                int PromptResult = JOptionPane.showConfirmDialog(null, "Cancel add user?",
                         "Confirm exit", JOptionPane.OK_CANCEL_OPTION);
-                if(PromptResult== JOptionPane.OK_OPTION)
-                {
-                    System.exit(0);
+                if(PromptResult== JOptionPane.OK_OPTION) {
+                    dispose();
                 }
             }
         });
 
-        setTitle("HuyNQ Cafeteria - Sign Up");
+        setTitle("Cafeteria System - Sign Up");
         setBounds(100, 100, 360, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,7 +135,6 @@ public class UserSignUpDialog extends JDialog {
         btnCreateAccount = new JButton("Create Account");
         btnCreateAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-
                 createUser();
             }
         });
@@ -147,7 +146,7 @@ public class UserSignUpDialog extends JDialog {
         btnBack.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                loginDialog.setVisible(true);
+                userManageDialogDialog.setVisible(true);
             }
         });
         btnBack.setFont(new Font("Lucida Fax", Font.BOLD, 13));
@@ -159,7 +158,7 @@ public class UserSignUpDialog extends JDialog {
             public void windowClosing(WindowEvent e){
 
                 //display the login Dialog.
-                loginDialog.setVisible(true);
+                userManageDialogDialog.setVisible(true);
             }
         });
     }
@@ -183,10 +182,10 @@ public class UserSignUpDialog extends JDialog {
 
         try {
             userDAO.addUser(user);
-            JOptionPane.showMessageDialog(loginDialog, "Customer created successfully",
+            JOptionPane.showMessageDialog(userManageDialogDialog, "Customer created successfully",
                     "Success!", JOptionPane.INFORMATION_MESSAGE);
             setVisible(false);
-            loginDialog.setVisible(true);
+            userManageDialogDialog.setVisible(true);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(UserSignUpDialog.this,
                     "Error creating account" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

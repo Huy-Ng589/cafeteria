@@ -26,6 +26,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -74,7 +75,7 @@ public class FoodMenuDialog extends JDialog {
             }
         });
 
-        setTitle("HuyNQ Cafeteria - Order Menu");
+        setTitle("Cafeteria System - Order Menu");
         setBounds(100, 100, 680, 520);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -116,8 +117,6 @@ public class FoodMenuDialog extends JDialog {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    //System.out.println(row);
-                    //System.out.println(tempFoodItem);
 
                     Items tempFoodItem = (Items)foodtable.getValueAt(row, FoodTableModel.OBJECT_COL);
                     String s = textField.getText();
@@ -176,7 +175,6 @@ public class FoodMenuDialog extends JDialog {
 
         foodtable = new JTable();
 
-
         try{
             tableModel = new FoodTableModel(foodDAO.getAllItems());
             foodtable.setModel(tableModel);
@@ -191,7 +189,6 @@ public class FoodMenuDialog extends JDialog {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
 
         JPanel bottombtnpanel = new JPanel();
         contentPanel.add(bottombtnpanel, BorderLayout.SOUTH);
@@ -235,18 +232,17 @@ public class FoodMenuDialog extends JDialog {
         });
         bottombtnpanel.add(btnProceedToCheckout);
 
-//        JPanel rightBottombtnpanel = new JPanel();
-//        contentPanel.add(rightBottombtnpanel, BorderLayout.EAST);
-//        rightBottombtnpanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-//
-//        btnRefresh = new JButton("Refresh");
-//        btnRefresh.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent arg0) {
-//                foodDAO.vacateQuantityColumn();
-//                refreshFoodItemView();
-//            }
-//        });
-//        rightBottombtnpanel.add(btnRefresh);
+        Component horizontalStrut_3 = Box.createHorizontalStrut(150);
+        bottombtnpanel.add(horizontalStrut_3);
+
+        btnRefresh = new JButton("Refresh");
+        btnRefresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                foodDAO.vacateQuantityColumn();
+                refreshFoodItemView();
+            }
+        });
+        bottombtnpanel.add(btnRefresh);
     }
 
     private void alignTable(){
@@ -285,6 +281,5 @@ public class FoodMenuDialog extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }
 

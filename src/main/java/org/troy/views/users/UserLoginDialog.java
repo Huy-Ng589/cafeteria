@@ -55,7 +55,7 @@ public class UserLoginDialog extends JDialog {
     public UserLoginDialog() {
         //this.setResizable(false);
 
-        setTitle("HuyNQ Cafeteria - Employee Log In");
+        setTitle("Cafeteria System - Employee Log In");
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

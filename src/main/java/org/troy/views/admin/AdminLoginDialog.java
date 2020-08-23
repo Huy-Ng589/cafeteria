@@ -45,7 +45,7 @@ public class AdminLoginDialog extends JDialog {
             public void windowClosing(WindowEvent we) {
                 int PromptResult = JOptionPane.showConfirmDialog(null, "Exit application ?",
                         "Confirm exit", JOptionPane.OK_CANCEL_OPTION);
-                if(PromptResult== JOptionPane.OK_OPTION) {
+                if(PromptResult == JOptionPane.OK_OPTION) {
                     System.exit(0);
                 }
             }
@@ -56,7 +56,7 @@ public class AdminLoginDialog extends JDialog {
     public AdminLoginDialog() {
         //this.setResizable(false);
 
-        setTitle("HuyNQ Cafeteria - Admin Log In");
+        setTitle("Cafeteria System - Admin Log In");
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -107,27 +107,6 @@ public class AdminLoginDialog extends JDialog {
             btnLogIn.setBounds(247, 78, 89, 23);
             credentialpanel.add(btnLogIn);
 
-            JLabel lblNewUser = new JLabel("Add new employee?");
-            lblNewUser.setFont(new Font("Sylfaen", Font.PLAIN, 15));
-            lblNewUser.setBounds(105, 125, 150, 14);
-            credentialpanel.add(lblNewUser);
-
-            JButton btnSignUp = new JButton("Sign up");
-            btnSignUp.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    UserSignUpDialog dialog = new UserSignUpDialog(AdminLoginDialog.this, userDao);
-                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-
-                    //dissolve current dialog and create new dialog
-                    dispose();
-                    //setVisible(false);    can use this also but dispose() is preferred to release memory
-                    dialog.setVisible(true);
-
-                }
-            });
-            btnSignUp.setBounds(248, 117, 89, 23);
-            credentialpanel.add(btnSignUp);
-
             JPanel bottombtnpanel = new JPanel();
             contentPanel.add(bottombtnpanel, BorderLayout.SOUTH);
             bottombtnpanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -168,7 +147,7 @@ public class AdminLoginDialog extends JDialog {
                     System.out.println("Admin authenticated");
                     userTextField.setText("");
                     passwordField.setText("");
-                    BillingAdminApp frame = new BillingAdminApp(AdminLoginDialog.this, orderDAO, foodDAO, user);
+                    BillingAdminApp frame = new BillingAdminApp(AdminLoginDialog.this, userDao, foodDAO, user);
                     frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);;
                     dispose();
                     frame.setVisible(true);
